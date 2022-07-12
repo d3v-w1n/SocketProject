@@ -13,16 +13,26 @@ import java.io.ObjectOutputStream;
 
 public class socketServer extends Thread {
 
-	
-	public static void main(String[] args) throws IOException {
-		//Get socket # to listen with socketNum()
-		//Implement Socket Listener with specified socket #?
+	//run() method call to constructor + while loop
+	public void run(ServerSocket s) {
+		
 		try {
 		Socket n = new Socket();
+		while(!s.isClosed()) {
+				n = s.accept(); }} catch(IOException exc) {
+				exc.printStackTrace();
+			}
+				
+				}
+	
+	public static void main(String[] args) throws IOException {
+		
+		//Implement Socket Listener with specified socket #?
+		try {
 		ServerSocket ss = new ServerSocket(25);
-		while(!ss.isClosed()) {
-		n = ss.accept();}
-		Thread serv = serverHandler(ss);
+		Socket n = new Socket();
+		Thread serv = new Thread();
+		serv = serverHandler(ss);
 		serv.start();
 		System.out.println("Connection Established" + n.toString());
 		n.close();
@@ -32,19 +42,19 @@ public class socketServer extends Thread {
 		
 		}
 	
-	public static final Thread serverHandler(ServerSocket s) {
-		public void run() throws IOException {
+	public final static Thread serverHandler(ServerSocket s) {
 		try {
-				newHandler(s);
-				System.out.printf("%s%n", "Establishing Connection - - -");
+			newHandler(s);
+			System.out.printf("%s%n", "Establishing Connection - - -");
 		}catch(IOException exc) {
-			exc.printStackTrace();
+		exc.printStackTrace();
 		}
-		}}
+		return serverHandler(s);
+	}
 	
-	public void newHandler(ServerSocket s) throws IOException {
+	public static void newHandler(ServerSocket s) throws IOException {
 		try {
-		this.newHandler(s);
+		s.accept();
 		}catch(IOException exc) {
 			exc.printStackTrace();
 		}}
