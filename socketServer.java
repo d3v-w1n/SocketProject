@@ -11,25 +11,41 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class socketServer {
+public class socketServer extends Thread {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//Get socket # to listen with socketNum()
 		//Implement Socket Listener with specified socket #?
 		try {
+		Socket n = new Socket();
 		ServerSocket ss = new ServerSocket(25);
-		Socket n = ss.accept();
-		PrintWriter out = new PrintWriter(n.getOutputStream(), true);
-		BufferedReader in = new BufferedReader(new InputStreamReader(n.getInputStream()));
-		BufferedReader streamIn = new BufferedReader(new InputStreamReader(System.in));
-		while(streamIn.readLine() != null) {
-			out.println();
-			System.out.println("echo: " + in.readLine());
-		}}catch(IOException exc) {
+		while(!ss.isClosed()) {
+		n = ss.accept();}
+		Thread serv = serverHandler(ss);
+		serv.start();
+		System.out.println("Connection Established" + n.toString());
+		n.close();
+		}catch(IOException exc) {
 			exc.printStackTrace();
 		}
 		
-			
 		}
+	
+	public static final Thread serverHandler(ServerSocket s) {
+		public void run() throws IOException {
+		try {
+				newHandler(s);
+				System.out.printf("%s%n", "Establishing Connection - - -");
+		}catch(IOException exc) {
+			exc.printStackTrace();
+		}
+		}}
+	
+	public void newHandler(ServerSocket s) throws IOException {
+		try {
+		this.newHandler(s);
+		}catch(IOException exc) {
+			exc.printStackTrace();
+		}}
 }
